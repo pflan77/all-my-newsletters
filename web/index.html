@@ -123,6 +123,7 @@ select.chip { appearance: none; padding-right: 12px; }
   background: var(--surface); border: var(--border-width) solid var(--border);
   border-radius: var(--radius); box-shadow: var(--shadow);
   padding: 22px 20px; animation: in .25s ease-out;
+  overflow-wrap: anywhere; /* long words or URLs wrap instead of running off the card */
 }
 @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .card { animation: none; } }

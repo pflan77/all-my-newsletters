@@ -80,7 +80,7 @@ python3 scripts/run_brief.py --dry-run        # see the exact prompt, no API cal
 python3 -m http.server --directory web 8000   # then open http://localhost:8000
 ```
 
-`BRIEF_PROVIDER=anthropic` talks to Claude. `BRIEF_PROVIDER=openai` talks to anything with an OpenAI-compatible API: OpenAI, Gemini, Grok, Mistral, Groq, OpenRouter, Ollama and LM Studio (set `BRIEF_BASE_URL`; examples are in `.env.example`). Each run also saves a copy in `archive/`, and the weekly recap reads that week's daily briefs from there.
+`BRIEF_PROVIDER=anthropic` talks to Claude. `BRIEF_PROVIDER=openai` talks to anything with an OpenAI-compatible API: OpenAI, Gemini, Grok, Mistral, Groq, OpenRouter, Ollama and LM Studio (set `BRIEF_BASE_URL`; examples are in `.env.example`). With a local model, raise its context length to at least 16,384 tokens first ([how](docs/models.md#local-models-give-them-enough-context-first)); the default is too small and cuts the prompt off silently. Each run also saves a copy in `archive/`, and the weekly recap reads that week's daily briefs from there.
 
 Put it on a timer with cron (macOS and Linux):
 

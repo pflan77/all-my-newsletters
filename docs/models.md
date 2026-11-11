@@ -62,6 +62,21 @@ provider's docs; model names change, so this guide doesn't list them.
 Check your provider's docs for its current OpenAI-compatible address if one of
 these has moved.
 
+### Local models: give them enough context first
+
+Local apps give models a small working memory (the "context window") by
+default, often 4,096 tokens. The prompt and your profile alone are about
+2,500 tokens, so with a few newsletters added the end gets cut off **without
+any error**, and the brief quietly misses stories and rules. Set it to at
+least 16,384 tokens (32,768 if you paste a lot of newsletters):
+
+- **Ollama:** quit Ollama, then start it with
+  `OLLAMA_CONTEXT_LENGTH=16384 ollama serve`, or raise **Context length** in
+  the Ollama app's settings. The script warns you if Ollama's window was too
+  small for that run.
+- **LM Studio:** set **Context Length** when you load the model (in the
+  model's load settings), then reload it.
+
 ### Tips for smaller and local models
 
 - Shorter is easier. Set `brief.max_stories` to 3 or 4.

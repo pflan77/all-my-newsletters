@@ -41,6 +41,7 @@ REQUIRED = {"daily": ["schema_version", "type", "date", "vibe", "tldr", "stories
 PROMPTS = {"daily": "prompts/daily-brief.md", "weekly": "prompts/weekly-recap.md", "plain": "prompts/plain-text.md"}
 DEFAULT_MODELS = {"anthropic": "claude-opus-5-5"}  # other providers: set BRIEF_MODEL
 SOURCE_WARN_CHARS = 400_000
+OLLAMA_ANSWER_ROOM = 4000  # tokens to leave free for the brief itself (and any "thinking")
 
 
 def die(msg):
@@ -161,9 +162,40 @@ def call_openai_compatible(prompt, model, key, timeout):
     data = post(base + "/chat/completions", headers,
                 {"model": model, "messages": [{"role": "user", "content": prompt}]}, timeout)
     try:
-        return data["choices"][0]["message"]["content"] or ""
+        answer = data["choices"][0]["message"]["content"] or ""
     except (KeyError, IndexError, TypeError):
         die("unexpected answer shape from %s: %s" % (base, json.dumps(data)[:500]))
+    check_ollama_context(base, model, (data.get("usage") or {}).get("prompt_tokens"))
+    return answer
+
+
+def check_ollama_context(base, model, prompt_tokens):
+    """Ollama gives models a small context window by default (4,096 tokens on
+    many machines) and quietly cuts anything longer, so warn when it's too small."""
+    if not prompt_tokens or not (":11434" in base or "ollama" in base.lower()):
+        return
+    root = re.sub(r"/v1/?$", "", base)
+    try:
+        with urllib.request.urlopen(root + "/api/ps", timeout=5) as r:
+            loaded = json.loads(r.read().decode("utf-8")).get("models", [])
+    except Exception:  # not Ollama after all, or an older version: nothing to check
+        return
+    for m in loaded:
+        ctx = m.get("context_length")
+        if m.get("name") in (model, model + ":latest") and ctx and ctx < prompt_tokens + OLLAMA_ANSWER_ROOM:
+            print("\nwarning: Ollama ran %s with a %d-token context window, but the prompt alone was %d tokens\n"
+                  "and the answer needs about %d more. Ollama cuts the rest without telling you, so\n"
+                  "newsletters (and the rules) were probably dropped. Fix: quit Ollama and start it with\n"
+                  "    OLLAMA_CONTEXT_LENGTH=%d ollama serve\n"
+                  "or raise \"Context length\" in the Ollama app's settings. See docs/models.md.\n"
+                  % (model, ctx, prompt_tokens, OLLAMA_ANSWER_ROOM, suggest_context(prompt_tokens)), file=sys.stderr)
+
+
+def suggest_context(prompt_tokens):
+    size = 8192
+    while size < prompt_tokens + OLLAMA_ANSWER_ROOM:
+        size *= 2
+    return max(size, 16384)
 
 
 def extract_json(text):
