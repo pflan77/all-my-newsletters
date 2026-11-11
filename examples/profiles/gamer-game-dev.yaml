@@ -1,0 +1,55 @@
+# Example: a hobbyist gamer learning game development
+about:
+  name: "Jordan"
+  role: "Support engineer by day, making my first indie game at night"
+  why_i_read: >
+    I want the game dev news that helps me ship my game, plus the
+    industry gossip I'd hear if I worked at a studio.
+  expertise: beginner
+  location: "Manila, Philippines"
+  time_zone: "Asia/Manila"
+
+pillars:
+  - name: "Engines and tools"
+    why: "I'm building in Godot and always looking for shortcuts."
+    examples: ["Godot, Unity and Unreal updates", "free asset drops", "AI art and code tools for devs"]
+  - name: "Indie success stories"
+    why: "I want to learn how small games find players."
+    examples: ["Steam launches", "postmortems", "wishlist strategies"]
+  - name: "Industry shake-ups"
+    why: "Context for where the jobs and money are."
+    examples: ["studio layoffs and acquisitions", "store fee changes"]
+  - name: "Game jams and events"
+    why: "Deadlines keep me shipping."
+    examples: ["upcoming jams", "showcases", "festival submissions"]
+
+local:
+  enabled: true
+  area: "Philippines and Southeast Asia"
+  focus: ["local studios", "meetups", "esports"]
+
+sources:
+  newsletters: ["Game Developer", "GamesIndustry.biz"]
+  sites: ["https://godotengine.org/blog", "https://www.reddit.com/r/gamedev", "https://itch.io/jams"]
+  feeds: []
+  social_as_pointers_only: true
+
+skip: ["console war arguments", "leaks and rumors without a source"]
+
+voice:
+  tone: "hype-free but fun, like a friend at a LAN party"
+  reading_level: "new dev; explain engine terms in one line"
+  emoji: lots
+
+flavor: ["JRPGs", "anime", "Star Wars", "pixel art"]
+
+brief:
+  max_stories: 6
+  summary_seconds: 30
+  include_move: true
+  include_talking_points: false
+  language: "English"
+
+recap: { day: "Friday", top_stories: 5, include_local: true, include_next_week: true }
+
+page: { title: "Save Point", theme: pixel }

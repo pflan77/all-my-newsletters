@@ -1,0 +1,55 @@
+# Example: a seed-stage founder building in fintech
+about:
+  name: "Priya"
+  role: "Co-founder and CEO of a seed-stage payments startup"
+  why_i_read: >
+    I need to see competitor moves, regulation and funding signals
+    early, and I have about five minutes before my first call.
+  expertise: expert
+  location: "London, UK"
+  time_zone: "Europe/London"
+
+pillars:
+  - name: "Payments and embedded finance"
+    why: "It's our market."
+    examples: ["new payment rails", "Stripe, Adyen and challenger moves", "embedded lending"]
+  - name: "Regulation"
+    why: "One rule change can rewrite our roadmap."
+    examples: ["FCA updates", "EU PSD3 and open banking", "stablecoin rules"]
+  - name: "Fundraising climate"
+    why: "We raise again next year."
+    examples: ["fintech rounds", "investor theses", "down rounds and exits"]
+  - name: "AI in finance ops"
+    why: "We're automating reconciliation."
+    examples: ["AI fraud detection", "finance agents"]
+
+local:
+  enabled: true
+  area: "London"
+  focus: ["fintech startups", "founder events"]
+
+sources:
+  newsletters: ["Fintech Business Weekly", "This Week in Fintech", "Sifted"]
+  sites: ["https://www.fca.org.uk/news", "https://techcrunch.com/category/fintech/"]
+  feeds: []
+  social_as_pointers_only: true
+
+skip: ["crypto token prices", "personal finance tips"]
+
+voice:
+  tone: "sharp, direct, numbers first, no fluff"
+  reading_level: "operator; assume I know the acronyms"
+  emoji: light
+
+flavor: ["chess", "Formula 1", "Succession"]
+
+brief:
+  max_stories: 6
+  summary_seconds: 20
+  include_move: true
+  include_talking_points: true
+  language: "English"
+
+recap: { day: "Friday", top_stories: 5, include_local: true, include_next_week: true }
+
+page: { title: "The Ledger", theme: clean }

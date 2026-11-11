@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "type": "daily",
+  "date": "2026-01-15",
+  "title": "Alex's Morning Brief",
+  "vibe": "Sample data. Every company and link here is made up so you can see the layout. Agents had a big morning, pricing got weird, and Austin got a new meetup.",
+  "tldr": [
+    "A (fictional) agent platform cut prices in half and moved to usage billing.",
+    "A survey from a (fictional) research firm says most teams still run agents in pilot only.",
+    "Austin's newest AI meetup opens its doors next Thursday."
+  ],
+  "stories": [
+    {
+      "id": "agent-price-cut",
+      "spark": "Half-price agents: the usage-billing boss fight begins",
+      "summary": "Example Labs cut the price of its agent platform by 50% and switched from seats to pay-per-task billing. Existing customers move over next quarter. The company says small teams were the reason.",
+      "why_it_matters": "You own pricing. If buyers start expecting per-task pricing for agents, your seat-based plan will get compared against it in every deal.",
+      "pillar": "SaaS pricing",
+      "angle": "Expect two or three rivals to copy this within a month.",
+      "confidence": "confirmed",
+      "tags": ["pricing", "agents"],
+      "sources": [
+        { "name": "Example Labs blog", "url": "https://example.com/blog/new-pricing" },
+        { "name": "TLDR" }
+      ]
+    },
+    {
+      "id": "agent-adoption-survey",
+      "spark": "Agents in production? Most teams are still in the tutorial level",
+      "summary": "A survey of 400 companies by Sample Research found that 6 in 10 are testing AI agents, but fewer than 1 in 5 run one in production. Cost and reliability were the top blockers.",
+      "why_it_matters": "Useful ammo for your build decision: the market is early, so a reliable, narrow agent could stand out more than a broad one.",
+      "pillar": "AI agents at work",
+      "confidence": "reported",
+      "tags": ["adoption", "research"],
+      "sources": [
+        { "name": "Sample Research report", "url": "https://example.com/research/agents-2026" }
+      ]
+    },
+    {
+      "id": "open-model-release",
+      "spark": "A free model that fits on a laptop just dropped",
+      "summary": "The Demo Collective released an open-weight model small enough to run on a recent laptop. Early testers on forums say it handles short coding tasks well. Independent benchmarks are not out yet.",
+      "why_it_matters": "If small local models keep improving, your team could prototype agent features without paying per call.",
+      "pillar": "AI agents at work",
+      "confidence": "early",
+      "tags": ["open source", "models"],
+      "sources": [
+        { "name": "Demo Collective release notes", "url": "https://example.com/demo-collective/release" }
+      ]
+    },
+    {
+      "id": "austin-ai-meetup",
+      "spark": "Austin gets a new AI builders night, and it's free",
+      "summary": "A new monthly meetup for people building with AI starts next Thursday downtown. The first session is a show-and-tell with five short demos.",
+      "why_it_matters": "You said you want to meet people building nearby. This is the easiest first step.",
+      "pillar": "Local tech scene",
+      "confidence": "confirmed",
+      "tags": ["local", "events"],
+      "sources": [
+        { "name": "Event page", "url": "https://example.com/events/austin-ai-night" }
+      ]
+    }
+  ],
+  "move": {
+    "title": "Price-check yourself",
+    "detail": "Spend 10 minutes writing what your product would cost per task instead of per seat. You'll want that number before a customer asks."
+  },
+  "talking_points": [
+    "Agent pricing is sliding from seats to tasks, so we should know our per-task cost.",
+    "Most companies are still piloting agents, so reliability is the real differentiator."
+  ],
+  "quick_hits": [
+    { "text": "A (fictional) note-taking app added an AI meeting recap feature.", "url": "https://example.com/news/notes-recap" },
+    { "text": "Sample Cloud raised prices on its smallest plan by $2 a month." }
+  ],
+  "local": {
+    "area": "Austin",
+    "items": [
+      { "text": "A (fictional) robotics startup is hiring 30 engineers for its new office.", "source": "Example Local News", "url": "https://example.com/local/robotics-hiring" }
+    ]
+  },
+  "watch_next": ["Example Labs' pricing webinar on Tuesday"],
+  "sources_read": [
+    { "name": "TLDR" },
+    { "name": "Morning Brew" },
+    { "name": "Hacker News", "url": "https://news.ycombinator.com" }
+  ],
+  "notes": "This is sample data for the demo page. Nothing in it is real news."
+}

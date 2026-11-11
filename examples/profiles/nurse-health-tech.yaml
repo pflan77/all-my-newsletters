@@ -1,0 +1,57 @@
+# Example: an ICU nurse who follows health tech
+about:
+  name: "Sam"
+  role: "ICU nurse, on the hospital's tech committee"
+  why_i_read: >
+    New tools keep landing on my unit. I want to know what's coming,
+    what actually helps patients, and what's just a press release.
+  expertise: intermediate
+  location: "Toronto, Canada"
+  time_zone: "America/Toronto"
+
+pillars:
+  - name: "AI at the bedside"
+    why: "Our unit is piloting an early-warning tool."
+    examples: ["sepsis prediction", "AI charting and scribes", "FDA and Health Canada clearances"]
+  - name: "Nursing workforce"
+    why: "Staffing shapes every shift."
+    examples: ["staffing tech", "burnout research", "union and policy news"]
+  - name: "Wearables and remote monitoring"
+    why: "Patients go home with these now."
+    examples: ["hospital-at-home", "continuous glucose and heart monitors"]
+  - name: "Patient safety"
+    why: "It's the job."
+    examples: ["device recalls", "medication safety alerts"]
+
+local:
+  enabled: true
+  area: "Ontario"
+  focus: ["hospital funding", "health policy"]
+
+sources:
+  newsletters: ["STAT Health Tech", "Becker's Health IT"]
+  sites: ["https://www.statnews.com", "https://www.fda.gov/medical-devices"]
+  feeds: []
+  social_as_pointers_only: true
+
+skip:
+  - "health stock prices"
+  - "wellness influencer trends"
+
+voice:
+  tone: "calm, clear, practical, with a dry sense of humor"
+  reading_level: "clinician; skip the basics, explain the tech"
+  emoji: none
+
+flavor: ["Grey's Anatomy", "trail running", "crosswords"]
+
+brief:
+  max_stories: 5
+  summary_seconds: 30
+  include_move: true
+  include_talking_points: true
+  language: "English"
+
+recap: { day: "Friday", top_stories: 5, include_local: true, include_next_week: true }
+
+page: { title: "Shift Notes", theme: paper }

@@ -1,0 +1,13 @@
+# Your private stuff never leaves your machine
+.env
+inbox/*
+!inbox/README.md
+archive/
+web/brief.json
+web/recap.json
+profile.local.yaml
+
+# Python / OS
+__pycache__/
+*.pyc
+.DS_Store

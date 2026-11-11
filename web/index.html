@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cut">
+<title>All My Newsletters</title>
+<meta name="description" content="Your morning brief, one card at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Press+Start+2P&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet">
+<style>
+/* ──────────────────────────────────────────────────────────────
+   THEMES
+   Every color and font lives in these variables. To make your own
+   theme, copy one block, rename it, and change the values. Then add
+   its name to CONFIG.themes in the script at the bottom.
+   ────────────────────────────────────────────────────────────── */
+:root, [data-theme="clean"] {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-2: #eef0f6;
+  --text: #15171f;
+  --muted: #5d6275;
+  --border: #dfe2ec;
+  --accent: #4f46e5;
+  --accent-text: #ffffff;
+  --good: #0f8a5f;
+  --warn: #b26b00;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: "Inter", system-ui, sans-serif;
+  --head-weight: 800;
+  --head-size: clamp(1.5rem, 5.5vw, 2.1rem);
+  --head-spacing: -0.02em;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(20, 24, 40, 0.08);
+  --border-width: 1px;
+}
+[data-theme="dark"] {
+  --bg: #0d0f16;
+  --surface: #161923;
+  --surface-2: #1f2330;
+  --text: #eef0f7;
+  --muted: #9aa0b4;
+  --border: #2a2f3e;
+  --accent: #8b85ff;
+  --accent-text: #0d0f16;
+  --good: #41d39b;
+  --warn: #f2b84b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+[data-theme="pixel"] {
+  --bg: #120f24;
+  --surface: #1d1838;
+  --surface-2: #2a2350;
+  --text: #f4f1ff;
+  --muted: #b3a9e0;
+  --border: #ff5fa2;
+  --accent: #ffd23f;
+  --accent-text: #120f24;
+  --good: #5cf2a5;
+  --warn: #ff8f3f;
+  --font-head: "Press Start 2P", monospace;
+  --head-weight: 400;
+  --head-size: clamp(0.95rem, 3.6vw, 1.3rem);
+  --head-spacing: 0;
+  --radius: 0px;
+  --shadow: 6px 6px 0 #ff5fa2;
+  --border-width: 3px;
+}
+[data-theme="paper"] {
+  --bg: #f3ede1;
+  --surface: #fffaf0;
+  --surface-2: #efe6d4;
+  --text: #2a2118;
+  --muted: #6e604f;
+  --border: #d9cbb2;
+  --accent: #b5452b;
+  --accent-text: #fffaf0;
+  --good: #3f7d3a;
+  --warn: #a06400;
+  --font-head: "Fraunces", Georgia, serif;
+  --head-weight: 800;
+  --head-spacing: -0.01em;
+  --radius: 6px;
+  --shadow: 0 2px 0 #d9cbb2;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); }
+button { font: inherit; color: inherit; }
+.wrap { max-width: 640px; margin: 0 auto; padding-block: 14px 120px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Top bar */
+.bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.brand { font-family: var(--font-head); font-weight: var(--head-weight); font-size: 0.95rem; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+[data-theme="pixel"] .brand { font-size: 0.7rem; }
+.chip {
+  border: var(--border-width) solid var(--border); background: var(--surface);
+  border-radius: 999px; padding: 6px 12px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;
+}
+[data-theme="pixel"] .chip { border-radius: 0; }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+select.chip { appearance: none; padding-right: 12px; }
+
+/* Progress */
+.progress { display: flex; gap: 4px; margin: 0 0 14px; }
+.progress span { flex: 1; height: 5px; border-radius: 3px; background: var(--surface-2); transition: background .2s; }
+.progress span.on { background: var(--accent); }
+[data-theme="pixel"] .progress span { border-radius: 0; height: 8px; }
+
+/* Card */
+.card {
+  background: var(--surface); border: var(--border-width) solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 22px 20px; animation: in .25s ease-out;
+}
+@keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .card { animation: none; } }
+.kicker { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+h1, h2 { font-family: var(--font-head); font-weight: var(--head-weight); letter-spacing: var(--head-spacing); line-height: 1.25; margin: 0 0 14px; }
+h1 { font-size: var(--head-size); }
+h2.spark { font-size: var(--head-size); }
+h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 20px 0 6px; }
+p { margin: 0 0 12px; }
+.vibe { font-size: 1.1rem; color: var(--muted); }
+.tldr { list-style: none; padding: 0; margin: 0; counter-reset: t; }
+.tldr li { counter-increment: t; position: relative; padding: 10px 0 10px 40px; border-top: 1px solid var(--border); }
+.tldr li::before { content: counter(t); position: absolute; left: 0; top: 9px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-text); display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; }
+[data-theme="pixel"] .tldr li::before { border-radius: 0; font-family: var(--font-head); font-size: 0.6rem; }
+.why { background: var(--surface-2); border-radius: calc(var(--radius) * .6); padding: 12px 14px; margin: 4px 0 12px; }
+.why b { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 2px; }
+.angle { border-left: 4px solid var(--accent); padding: 2px 0 2px 12px; font-style: italic; color: var(--muted); }
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; text-transform: uppercase; letter-spacing: 0.06em; }
+.badge.confirmed { color: var(--good); }
+.badge.reported { color: var(--muted); }
+.badge.early { color: var(--warn); }
+.sources { font-size: 0.88rem; color: var(--muted); margin: 14px 0 0; }
+.sources a, .sources span.s { margin-right: 10px; display: inline-block; }
+ul.plain { padding-left: 20px; margin: 0 0 8px; }
+ul.plain li { margin-bottom: 6px; }
+.note { font-size: 0.88rem; color: var(--muted); border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 18px; }
+
+/* Bottom nav */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: linear-gradient(transparent, var(--bg) 35%); display: flex; justify-content: center;
+}
+.nav-inner { display: flex; gap: 10px; width: 100%; max-width: 640px; }
+.btn {
+  flex: 1; border: var(--border-width) solid var(--border); background: var(--surface); border-radius: var(--radius);
+  padding: 14px; font-weight: 700; cursor: pointer; min-height: 52px;
+}
+.btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); flex: 2; }
+.btn:disabled { opacity: .4; cursor: default; }
+[data-theme="pixel"] .btn { font-family: var(--font-head); font-size: 0.7rem; }
+
+/* Loader */
+textarea { width: 100%; min-height: 160px; border: var(--border-width) solid var(--border); border-radius: calc(var(--radius) * .6); background: var(--surface-2); color: var(--text); padding: 12px; font: 0.85rem/1.4 ui-monospace, Menlo, monospace; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.err { color: var(--warn); font-size: 0.9rem; }
+.done-big { font-size: 3rem; line-height: 1; margin-bottom: 8px; }
+.stat { display: inline-block; background: var(--surface-2); border-radius: calc(var(--radius) * .6); padding: 8px 12px; margin: 0 8px 8px 0; font-weight: 700; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="brand" id="brand">All My Newsletters</div>
+    <div id="modeSwitch" hidden>
+      <button class="chip" id="modeDaily" aria-pressed="true">Daily</button>
+      <button class="chip" id="modeWeekly" aria-pressed="false">Weekly</button>
+    </div>
+    <label class="sr" for="theme">Theme</label>
+    <select class="chip" id="theme" aria-label="Theme"></select>
+    <button class="chip" id="loadBtn" title="Load a brief">Load</button>
+  </header>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <main id="view" aria-live="polite"></main>
+</div>
+<nav class="nav" id="nav" hidden>
+  <div class="nav-inner">
+    <button class="btn" id="prev">Back</button>
+    <button class="btn primary" id="next">Next</button>
+  </div>
+</nav>
+
+<!-- Demo data, used when no brief.json is found. Safe to delete. -->
+<script type="application/json" id="demo-daily">{"schema_version":"1.0","type":"daily","date":"2026-01-15","title":"Alex's Morning Brief","vibe":"Sample data. Every company and link here is made up so you can see the layout. Agents had a big morning, pricing got weird, and Austin got a new meetup.","tldr":["A (fictional) agent platform cut prices in half and moved to usage billing.","A survey from a (fictional) research firm says most teams still run agents in pilot only.","Austin's newest AI meetup opens its doors next Thursday."],"stories":[{"id":"agent-price-cut","spark":"Half-price agents: the usage-billing boss fight begins","summary":"Example Labs cut the price of its agent platform by 50% and switched from seats to pay-per-task billing. Existing customers move over next quarter. The company says small teams were the reason.","why_it_matters":"You own pricing. If buyers start expecting per-task pricing for agents, your seat-based plan will get compared against it in every deal.","pillar":"SaaS pricing","angle":"Expect two or three rivals to copy this within a month.","confidence":"confirmed","tags":["pricing","agents"],"sources":[{"name":"Example Labs blog","url":"https://example.com/blog/new-pricing"},{"name":"TLDR"}]},{"id":"agent-adoption-survey","spark":"Agents in production? Most teams are still in the tutorial level","summary":"A survey of 400 companies by Sample Research found that 6 in 10 are testing AI agents, but fewer than 1 in 5 run one in production. Cost and reliability were the top blockers.","why_it_matters":"Useful ammo for your build decision: the market is early, so a reliable, narrow agent could stand out more than a broad one.","pillar":"AI agents at work","confidence":"reported","tags":["adoption","research"],"sources":[{"name":"Sample Research report","url":"https://example.com/research/agents-2026"}]},{"id":"open-model-release","spark":"A free model that fits on a laptop just dropped","summary":"The Demo Collective released an open-weight model small enough to run on a recent laptop. Early testers on forums say it handles short coding tasks well. Independent benchmarks are not out yet.","why_it_matters":"If small local models keep improving, your team could prototype agent features without paying per call.","pillar":"AI agents at work","confidence":"early","tags":["open source","models"],"sources":[{"name":"Demo Collective release notes","url":"https://example.com/demo-collective/release"}]},{"id":"austin-ai-meetup","spark":"Austin gets a new AI builders night, and it's free","summary":"A new monthly meetup for people building with AI starts next Thursday downtown. The first session is a show-and-tell with five short demos.","why_it_matters":"You said you want to meet people building nearby. This is the easiest first step.","pillar":"Local tech scene","confidence":"confirmed","tags":["local","events"],"sources":[{"name":"Event page","url":"https://example.com/events/austin-ai-night"}]}],"move":{"title":"Price-check yourself","detail":"Spend 10 minutes writing what your product would cost per task instead of per seat. You'll want that number before a customer asks."},"talking_points":["Agent pricing is sliding from seats to tasks, so we should know our per-task cost.","Most companies are still piloting agents, so reliability is the real differentiator."],"quick_hits":[{"text":"A (fictional) note-taking app added an AI meeting recap feature.","url":"https://example.com/news/notes-recap"},{"text":"Sample Cloud raised prices on its smallest plan by $2 a month."}],"local":{"area":"Austin","items":[{"text":"A (fictional) robotics startup is hiring 30 engineers for its new office.","source":"Example Local News","url":"https://example.com/local/robotics-hiring"}]},"watch_next":["Example Labs' pricing webinar on Tuesday"],"sources_read":[{"name":"TLDR"},{"name":"Morning Brew"},{"name":"Hacker News","url":"https://news.ycombinator.com"}],"notes":"This is sample data for the demo page. Nothing in it is real news."}</script>
+<script type="application/json" id="demo-weekly">{"schema_version":"1.0","type":"weekly","date":"2026-01-16","week_of":"2026-01-10","title":"Week in Review","vibe":"Sample data, all made up. The week agents got cheaper and everyone pretended they'd planned for it.","tldr":["Agent pricing started moving from seats to tasks.","Adoption is still mostly pilots, according to a (fictional) survey.","Austin's AI scene got a new monthly meetup."],"stories":[{"id":"agent-price-cut","rank":1,"date":"2026-01-15","spark":"Half-price agents start a pricing war","summary":"Example Labs halved its agent price and moved to pay-per-task. By Friday one rival had announced a similar plan, according to its own blog.","why_it_matters":"This is now a trend, not a one-off. Expect it to come up in your pricing reviews.","pillar":"SaaS pricing","confidence":"confirmed","sources":[{"name":"Example Labs blog","url":"https://example.com/blog/new-pricing"},{"name":"Rival Co blog","url":"https://example.com/rival/pricing"}]},{"id":"agent-adoption-survey","rank":2,"date":"2026-01-15","spark":"Most agents are still stuck in pilot","summary":"Fewer than 1 in 5 surveyed companies run an agent in production. Cost and reliability top the list of blockers.","why_it_matters":"Supports a narrow, reliable first agent over a broad one.","pillar":"AI agents at work","confidence":"reported","sources":[{"name":"Sample Research report","url":"https://example.com/research/agents-2026"}]},{"id":"open-model-release","rank":3,"date":"2026-01-15","spark":"Laptop-sized open model gets its first real tests","summary":"Independent testers published early results midweek. It does well on short coding tasks and struggles with long documents.","why_it_matters":"Good enough for cheap prototypes, not yet for production.","pillar":"AI agents at work","confidence":"reported","sources":[{"name":"Example Benchmarks","url":"https://example.com/benchmarks/laptop-model"}]}],"local":{"area":"Austin","items":[{"text":"New free AI builders night starts next Thursday downtown.","source":"Event page","url":"https://example.com/events/austin-ai-night"},{"text":"A (fictional) robotics startup is hiring 30 engineers.","source":"Example Local News","url":"https://example.com/local/robotics-hiring"}]},"watch_next_week":{"title":"Example Labs' pricing webinar","detail":"Listen for how they handle customers who use a lot of tasks.","date":"2026-01-20"},"sources_read":[{"name":"TLDR"},{"name":"Morning Brew"},{"name":"Hacker News","url":"https://news.ycombinator.com"}],"notes":"This is sample data for the demo page. Nothing in it is real news."}</script>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   CONFIG: change these to make the page yours.
+   ────────────────────────────────────────────────────────────── */
+const CONFIG = {
+  brand: "All My Newsletters",       // shown top left when the brief has no title
+  defaultTheme: "auto",              // auto | clean | dark | pixel | paper
+  themes: ["auto", "clean", "dark", "pixel", "paper"],
+  dailyFile: "brief.json",           // looked for next to this page
+  weeklyFile: "recap.json",
+  doneEmoji: "🎉"
+};
+
+/* Everything below is the reader. You don't need to touch it. */
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+};
+const state = { daily: null, weekly: null, mode: "daily", i: 0, started: 0 };
+
+/* Safe DOM helpers: model output is never inserted as HTML. */
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") n.className = v; else n.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) n.append(k.nodeType ? k : String(k));
+  return n;
+}
+function safeUrl(u) {
+  if (typeof u !== "string") return null;
+  try { const p = new URL(u); return (p.protocol === "https:" || p.protocol === "http:") ? p.href : null; } catch (e) { return null; }
+}
+function link(text, url) {
+  const u = safeUrl(url);
+  return u ? el("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, text) : el("span", { class: "s" }, text);
+}
+const arr = (x) => Array.isArray(x) ? x : [];
+
+/* Theme */
+function applyTheme(name) {
+  let t = name;
+  if (t === "auto") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "clean";
+  document.documentElement.setAttribute("data-theme", t);
+}
+function initTheme() {
+  const sel = $("theme");
+  for (const t of CONFIG.themes) sel.append(el("option", { value: t }, t[0].toUpperCase() + t.slice(1)));
+  const fromUrl = new URLSearchParams(location.search).get("theme");
+  const chosen = CONFIG.themes.includes(fromUrl) ? fromUrl : (store.get("amn-theme") || CONFIG.defaultTheme);
+  sel.value = CONFIG.themes.includes(chosen) ? chosen : "auto";
+  applyTheme(sel.value);
+  sel.addEventListener("change", () => { store.set("amn-theme", sel.value); applyTheme(sel.value); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => applyTheme(sel.value));
+}
+
+/* Validate just enough to render without crashing. */
+function check(d) {
+  if (!d || typeof d !== "object") throw new Error("That isn't a JSON object.");
+  if (d.type !== "daily" && d.type !== "weekly") throw new Error('Missing "type": it should be "daily" or "weekly".');
+  if (!Array.isArray(d.stories)) throw new Error('Missing the "stories" list.');
+  return d;
+}
+function parseLoose(text) {
+  // Models sometimes wrap JSON in ``` fences or add a sentence. Pull out the object.
+  const s = text.indexOf("{"), e = text.lastIndexOf("}");
+  if (s < 0 || e < s) throw new Error("No JSON object found in what you pasted.");
+  return check(JSON.parse(text.slice(s, e + 1)));
+}
+
+/* Slides: cover, one per story, wrap-up, done. */
+function slides() {
+  const d = state[state.mode];
+  return ["cover", ...arr(d.stories).map((_, i) => i), "wrap", "done"];
+}
+function render() {
+  const d = state[state.mode];
+  const list = slides();
+  state.i = Math.max(0, Math.min(state.i, list.length - 1));
+  const s = list[state.i];
+  $("brand").textContent = d.title || CONFIG.brand;
+  document.title = (d.title || CONFIG.brand) + (d.date ? " · " + d.date : "");
+  const prog = $("progress"); prog.replaceChildren();
+  list.forEach((_, k) => prog.append(el("span", { class: k <= state.i ? "on" : "" })));
+  const v = $("view"); v.replaceChildren();
+  if (s === "cover") v.append(cover(d));
+  else if (s === "wrap") v.append(wrap(d));
+  else if (s === "done") v.append(done(d));
+  else v.append(story(d.stories[s], s, d.stories.length, d.type));
+  $("nav").hidden = false;
+  $("prev").disabled = state.i === 0;
+  $("next").textContent = s === "cover" ? "Start" : s === "done" ? "Read again" : "Next";
+  window.scrollTo({ top: 0 });
+}
+function cover(d) {
+  const when = d.type === "weekly" ? `Week of ${d.week_of || ""}` : (d.date || "");
+  const n = arr(d.stories).length;
+  return el("article", { class: "card" },
+    el("p", { class: "kicker" }, when, el("span", {}, `${n} ${n === 1 ? "story" : "stories"} · about ${Math.max(1, Math.round(n * 0.6))} min`)),
+    el("h1", {}, d.type === "weekly" ? "The week, in one read" : "Your morning, in one read"),
+    d.vibe && el("p", { class: "vibe" }, d.vibe),
+    arr(d.tldr).length ? el("h3", {}, "TL;DR") : null,
+    arr(d.tldr).length ? el("ol", { class: "tldr" }, arr(d.tldr).map((t) => el("li", {}, t))) : null,
+    n === 0 ? el("p", { class: "note" }, d.notes || "Nothing made the cut today. Enjoy the quiet.") : null
+  );
+}
+function story(st, i, n, type) {
+  const conf = ["confirmed", "reported", "early"].includes(st.confidence) ? st.confidence : null;
+  return el("article", { class: "card" },
+    el("p", { class: "kicker" },
+      el("span", {}, `${type === "weekly" ? "#" + (st.rank || i + 1) : (i + 1) + " / " + n}`),
+      st.pillar && el("span", {}, st.pillar),
+      st.date && type === "weekly" && el("span", {}, st.date),
+      conf && el("span", { class: "badge " + conf }, conf)),
+    el("h2", { class: "spark" }, st.spark || ""),
+    el("p", {}, st.summary || ""),
+    st.why_it_matters && el("div", { class: "why" }, el("b", {}, "Why it matters to you"), st.why_it_matters),
+    st.angle && el("p", { class: "angle" }, st.angle),
+    arr(st.sources).length ? el("p", { class: "sources" }, "Sources: ", arr(st.sources).map((s) => link(s.name || "source", s.url))) : null
+  );
+}
+function section(title, body) { return body ? [el("h3", {}, title), body] : []; }
+function wrap(d) {
+  const parts = [];
+  if (d.move) parts.push(...section("Your move", el("div", { class: "why" }, el("b", {}, d.move.title || ""), d.move.detail || "")));
+  if (arr(d.talking_points).length) parts.push(...section("Say this in a meeting", el("ul", { class: "plain" }, d.talking_points.map((t) => el("li", {}, t)))));
+  if (arr(d.quick_hits).length) parts.push(...section("Quick hits", el("ul", { class: "plain" }, d.quick_hits.map((q) => el("li", {}, q.url ? link(q.text, q.url) : q.text)))));
+  if (d.local && arr(d.local.items).length) parts.push(...section("Local · " + (d.local.area || ""), el("ul", { class: "plain" }, d.local.items.map((q) => el("li", {}, q.url ? link(q.text, q.url) : q.text, q.source ? el("span", { class: "sources" }, " · " + q.source) : null)))));
+  if (arr(d.watch_next).length) parts.push(...section("Watch next", el("ul", { class: "plain" }, d.watch_next.map((t) => el("li", {}, t)))));
+  if (d.watch_next_week) parts.push(...section("Watch next week", el("div", { class: "why" }, el("b", {}, d.watch_next_week.title + (d.watch_next_week.date ? " · " + d.watch_next_week.date : "")), d.watch_next_week.detail || "")));
+  if (!parts.length) parts.push(el("p", {}, "That's every story."));
+  return el("article", { class: "card" },
+    el("p", { class: "kicker" }, "Wrap-up"),
+    el("h1", {}, "Before you go"),
+    parts,
+    arr(d.sources_read).length ? el("p", { class: "sources" }, "Read today: ", d.sources_read.map((s) => link(s.name, s.url))) : null,
+    d.notes && el("p", { class: "note" }, d.notes)
+  );
+}
+function done(d) {
+  const key = d.type + ":" + (d.date || "");
+  const today = new Date().toISOString().slice(0, 10);
+  let streak = 1;
+  if (d.type === "daily") {
+    const last = store.get("amn-last"), prev = parseInt(store.get("amn-streak") || "0", 10);
+    const y = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+    streak = last === today ? prev || 1 : last === y ? prev + 1 : 1;
+    store.set("amn-last", today); store.set("amn-streak", String(streak));
+  }
+  store.set("amn-read:" + key, "1");
+  const mins = Math.max(1, Math.round((Date.now() - state.started) / 60000));
+  return el("article", { class: "card" },
+    el("div", { class: "done-big", "aria-hidden": "true" }, CONFIG.doneEmoji),
+    el("h1", {}, d.type === "weekly" ? "Week cleared" : "Brief cleared"),
+    el("p", {}, el("span", { class: "stat" }, `${arr(d.stories).length} stories`), el("span", { class: "stat" }, `${mins} min`),
+      d.type === "daily" ? el("span", { class: "stat" }, `🔥 ${streak}-day streak`) : null),
+    el("p", { class: "vibe" }, "That's everything worth your time. The rest of the newsletters can wait.")
+  );
+}
+
+/* Loader screen: paste or pick a JSON file. */
+function loader(msg) {
+  $("nav").hidden = true; $("progress").replaceChildren();
+  const ta = el("textarea", { placeholder: "Paste the JSON your AI gave you here", "aria-label": "Brief JSON" });
+  const file = el("input", { type: "file", accept: ".json,application/json", class: "sr", id: "file" });
+  const err = el("p", { class: "err", role: "alert" }, msg || "");
+  const use = (d) => { store.set("amn-" + d.type, JSON.stringify(d)); setData(d); };
+  const go = el("button", { class: "chip" }, "Show my brief");
+  go.onclick = () => { try { use(parseLoose(ta.value)); } catch (e) { err.textContent = e.message; } };
+  const pick = el("button", { class: "chip" }, "Open a file");
+  pick.onclick = () => file.click();
+  file.onchange = async () => { try { use(parseLoose(await file.files[0].text())); } catch (e) { err.textContent = e.message; } };
+  const demo = el("button", { class: "chip" }, "See a demo");
+  demo.onclick = () => loadDemo();
+  $("view").replaceChildren(el("article", { class: "card" },
+    el("p", { class: "kicker" }, "Load a brief"),
+    el("h1", {}, "Paste today's brief"),
+    el("p", {}, "Run the daily or weekly prompt in any AI, copy its JSON answer, and paste it below. It stays in this browser only."),
+    ta, el("div", { class: "row" }, go, pick, demo), file, err));
+}
+function setData(d) {
+  state[d.type] = d; state.mode = d.type; state.i = 0; state.started = Date.now();
+  updateModeSwitch(); render();
+}
+function updateModeSwitch() {
+  $("modeSwitch").hidden = !(state.daily && state.weekly);
+  $("modeDaily").setAttribute("aria-pressed", String(state.mode === "daily"));
+  $("modeWeekly").setAttribute("aria-pressed", String(state.mode === "weekly"));
+}
+function loadDemo() {
+  try { state.weekly = check(JSON.parse($("demo-weekly").textContent)); } catch (e) {}
+  try { setData(check(JSON.parse($("demo-daily").textContent))); } catch (e) { loader("The demo data is missing."); }
+}
+async function fetchJson(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error(r.status);
+  return check(await r.json());
+}
+async function boot() {
+  initTheme();
+  const q = new URLSearchParams(location.search);
+  const src = q.get("src");
+  // 1) ?src=some.json  2) brief.json / recap.json beside the page  3) last pasted  4) loader
+  const tries = src ? [src] : [CONFIG.dailyFile, CONFIG.weeklyFile];
+  for (const t of tries) { try { const d = await fetchJson(t); state[d.type] = state[d.type] || d; } catch (e) {} }
+  for (const k of ["daily", "weekly"]) if (!state[k]) { try { const s = store.get("amn-" + k); if (s) state[k] = check(JSON.parse(s)); } catch (e) {} }
+  if (q.get("demo") === "1") return loadDemo();
+  const want = q.get("mode") === "weekly" ? "weekly" : "daily";
+  const first = state[want] || state.daily || state.weekly;
+  if (first) setData(first); else loader();
+}
+
+/* Controls */
+$("next").onclick = () => { if (slides()[state.i] === "done") { state.i = 0; state.started = Date.now(); } else state.i++; render(); };
+$("prev").onclick = () => { state.i--; render(); };
+$("loadBtn").onclick = () => loader();
+$("modeDaily").onclick = () => { state.mode = "daily"; state.i = 0; updateModeSwitch(); render(); };
+$("modeWeekly").onclick = () => { state.mode = "weekly"; state.i = 0; updateModeSwitch(); render(); };
+document.addEventListener("keydown", (e) => {
+  if ($("nav").hidden || /TEXTAREA|INPUT|SELECT/.test(e.target.tagName)) return;
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); $("next").click(); }
+  if (e.key === "ArrowLeft" && !$("prev").disabled) $("prev").click();
+});
+let tx = null;
+document.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener("touchend", (e) => {
+  if (tx == null || $("nav").hidden) return;
+  const dx = e.changedTouches[0].clientX - tx; tx = null;
+  if (dx < -60) $("next").click(); else if (dx > 60 && !$("prev").disabled) $("prev").click();
+});
+boot();
+</script>
+</body>
+</html>

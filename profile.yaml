@@ -1,0 +1,96 @@
+# ─────────────────────────────────────────────────────────────
+#  YOUR PROFILE
+#  This is the only file you have to edit. The AI reads it every
+#  morning and every Friday to decide what matters to YOU.
+#
+#  Tips
+#  - Write like you're briefing a smart friend. Plain words win.
+#  - Be specific. "AI in radiology" beats "health tech".
+#  - Delete any section you don't need. Nothing here is required
+#    except `about` and `pillars`.
+#  - Never put passwords, API keys or account numbers in here.
+# ─────────────────────────────────────────────────────────────
+
+about:
+  name: "Alex"                      # what the brief calls you
+  role: "Product manager at a mid-size SaaS company"
+  why_i_read: >
+    I want to know what's changing in my industry before my
+    coworkers do, without reading 15 newsletters every morning.
+  expertise: intermediate           # beginner | intermediate | expert
+  location: "Austin, Texas, USA"    # used for the local section
+  time_zone: "America/Chicago"
+
+# ── What you care about ──────────────────────────────────────
+# 3 to 6 pillars. Each becomes a lens for picking stories.
+pillars:
+  - name: "AI agents at work"
+    why: "We're deciding whether to build agents into our product this year."
+    examples: ["new agent launches", "real adoption numbers", "pricing changes"]
+  - name: "SaaS pricing"
+    why: "I own pricing for my product line."
+    examples: ["usage-based pricing moves", "seat price changes"]
+  - name: "Local tech scene"
+    why: "I want to meet people building nearby."
+    examples: ["startup funding in my city", "meetups", "new offices"]
+
+# ── Local section ────────────────────────────────────────────
+local:
+  enabled: true
+  area: "Austin"                    # city, region or country
+  focus: ["startups", "events", "big employers"]
+
+# ── Where the news comes from ────────────────────────────────
+# The AI only uses what it can actually read. In a chat app with
+# email access it can read your newsletters; with web search it can
+# read sites. With the script, paste newsletters into the inbox/ folder.
+sources:
+  newsletters:                      # names as they appear in your inbox
+    - "TLDR"
+    - "Morning Brew"
+  sites:
+    - "https://simonwillison.net"
+    - "https://news.ycombinator.com"
+  feeds: []                         # RSS / Atom URLs
+  local_first: []                   # sources to check first for local news
+  social_as_pointers_only: true     # social posts only point to stories
+                                    # that a real source confirms
+
+# ── What to leave out ────────────────────────────────────────
+skip:
+  - "crypto price swings"
+  - "celebrity gossip"
+  - "funding rounds under $5M unless local"
+
+# ── How it should sound ──────────────────────────────────────
+voice:
+  tone: "punchy, warm, a little playful, never hype"
+  reading_level: "smart friend, no jargon without a quick explanation"
+  emoji: light                      # none | light | lots
+
+# ── Make it yours ────────────────────────────────────────────
+# Hobbies and fandoms the AI can use for headlines and jokes.
+# It flavors the writing; it never changes the facts.
+flavor:
+  - "basketball"
+  - "cooking"
+  - "90s video games"
+
+# ── Length and shape ─────────────────────────────────────────
+brief:
+  max_stories: 6                    # quiet day = fewer, never filler
+  summary_seconds: 30               # how long each story takes to read
+  include_move: true                # one thing to do today
+  include_talking_points: true      # lines you can use in a meeting
+  language: "English"
+
+recap:
+  day: "Friday"
+  top_stories: 5
+  include_local: true
+  include_next_week: true
+
+# ── Reader page ──────────────────────────────────────────────
+page:
+  title: "Alex's Morning Brief"         # shown at the top of the reader page
+  theme: clean                      # clean | dark | pixel | paper

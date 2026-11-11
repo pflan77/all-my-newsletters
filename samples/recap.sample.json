@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "type": "weekly",
+  "date": "2026-01-16",
+  "week_of": "2026-01-10",
+  "title": "Week in Review",
+  "vibe": "Sample data, all made up. The week agents got cheaper and everyone pretended they'd planned for it.",
+  "tldr": [
+    "Agent pricing started moving from seats to tasks.",
+    "Adoption is still mostly pilots, according to a (fictional) survey.",
+    "Austin's AI scene got a new monthly meetup."
+  ],
+  "stories": [
+    {
+      "id": "agent-price-cut",
+      "rank": 1,
+      "date": "2026-01-15",
+      "spark": "Half-price agents start a pricing war",
+      "summary": "Example Labs halved its agent price and moved to pay-per-task. By Friday one rival had announced a similar plan, according to its own blog.",
+      "why_it_matters": "This is now a trend, not a one-off. Expect it to come up in your pricing reviews.",
+      "pillar": "SaaS pricing",
+      "confidence": "confirmed",
+      "sources": [
+        { "name": "Example Labs blog", "url": "https://example.com/blog/new-pricing" },
+        { "name": "Rival Co blog", "url": "https://example.com/rival/pricing" }
+      ]
+    },
+    {
+      "id": "agent-adoption-survey",
+      "rank": 2,
+      "date": "2026-01-15",
+      "spark": "Most agents are still stuck in pilot",
+      "summary": "Fewer than 1 in 5 surveyed companies run an agent in production. Cost and reliability top the list of blockers.",
+      "why_it_matters": "Supports a narrow, reliable first agent over a broad one.",
+      "pillar": "AI agents at work",
+      "confidence": "reported",
+      "sources": [{ "name": "Sample Research report", "url": "https://example.com/research/agents-2026" }]
+    },
+    {
+      "id": "open-model-release",
+      "rank": 3,
+      "date": "2026-01-15",
+      "spark": "Laptop-sized open model gets its first real tests",
+      "summary": "Independent testers published early results midweek. It does well on short coding tasks and struggles with long documents.",
+      "why_it_matters": "Good enough for cheap prototypes, not yet for production.",
+      "pillar": "AI agents at work",
+      "confidence": "reported",
+      "sources": [{ "name": "Example Benchmarks", "url": "https://example.com/benchmarks/laptop-model" }]
+    }
+  ],
+  "local": {
+    "area": "Austin",
+    "items": [
+      { "text": "New free AI builders night starts next Thursday downtown.", "source": "Event page", "url": "https://example.com/events/austin-ai-night" },
+      { "text": "A (fictional) robotics startup is hiring 30 engineers.", "source": "Example Local News", "url": "https://example.com/local/robotics-hiring" }
+    ]
+  },
+  "watch_next_week": {
+    "title": "Example Labs' pricing webinar",
+    "detail": "Listen for how they handle customers who use a lot of tasks.",
+    "date": "2026-01-20"
+  },
+  "sources_read": [{ "name": "TLDR" }, { "name": "Morning Brew" }, { "name": "Hacker News", "url": "https://news.ycombinator.com" }],
+  "notes": "This is sample data for the demo page. Nothing in it is real news."
+}
